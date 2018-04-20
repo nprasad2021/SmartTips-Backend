@@ -4,9 +4,7 @@ api = Blueprint('api', __name__)
 
 from .errors import unauthorized
 
-@api.route('/me/')
-def tell_me_about_me():
-    u = g.current_user
-    if u.is_anonymous():
-        return unauthorized('No info for anonymous user')
-    return jsonify({'email': u.email})
+@api.route('/test/')
+def test_method():
+    return jsonify({'message': 'hello world'})
+
