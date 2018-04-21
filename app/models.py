@@ -20,6 +20,8 @@ class Place(db.Model):
     name = db.Column(db.String, nullable=False)
     location_latitude = db.Column(db.Numeric, nullable=False)
     location_longitude = db.Column(db.Numeric, nullable=False)
+    is_tipping_available = db.Column(db.Boolean, nullable=False)
+    is_place_tippting_available = db.Column(db.Boolean, nullable=True)
     tips = db.relationship('Tip', backref='place', lazy=True)
     waiters = db.relationship('Waiter', backref='place', lazy=True)
 
