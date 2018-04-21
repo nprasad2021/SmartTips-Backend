@@ -1,6 +1,7 @@
 from . import api
 from flask import jsonify, abort, request
 import geopy
+from geopy import distance
 from app.models import Place
 
 from api.authentication import requires_authentication
@@ -18,8 +19,10 @@ def places_for_location():
     all_places = Place.query.all()
     result = []
     for place in all_places:
-        if geopy.distance.distance(place.location(), user_location).km < required_distance:
-            result.append(place)
+        place_location = place.location()
+        distance_to_place = distance.distance(place_location, user_location).km
+        if distance_to_place < required_distance:
+            result.append(place.serialize())
 
 
     return jsonify(places=result), 200

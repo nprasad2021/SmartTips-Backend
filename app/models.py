@@ -34,10 +34,20 @@ class Place(db.Model):
         self.location_longitude = location_longitude
         self.is_tipping_available = is_tipping_available
 
-    def location():
-        Point(self.location_latitude, self.location_logitude)
+    def location(self):
+        return Point(self.location_latitude, self.location_longitude)
 
-
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'address': self.address,
+            'location_latitude': self.location_latitude,
+            'location_longitude': self.location_longitude,
+            'is_tipping_available': self.is_tipping_available,
+            'is_place_tippting_available': self.is_place_tippting_available,
+            'tips': [tip.serialize() for tip in self.tips]
+        }
 
 class Waiter(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -56,3 +66,10 @@ class Tip(db.Model):
     place_id = db.Column(db.Integer, db.ForeignKey('place.id'), nullable=False)
     waiter_id = db.Column(db.Integer, db.ForeignKey('waiter.id'), nullable=True)
 
+    def serialize(self):
+        return {
+            'id': self.id,
+            'amount': self.amount,
+            'comment': self.comment,
+            'created_at': self.created_at.isoformat()
+        }
