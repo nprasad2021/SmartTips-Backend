@@ -3,15 +3,13 @@
 from flask import current_app
 from . import db
 from datetime import datetime
+import secrets
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(80), unique=False, nullable=False)
     last_name = db.Column(db.String(80), unique=False, nullable=False)
-    facebook_access_token = db.Column(db.String(100), unique=True, nullable=False)
-
-    def __repr__(self):
-        return '<User %r>' % self.username
+    api_token = db.Column(db.String, unique=True, nullable=False, default=secrets.token_urlsafe)
 
 class Place(db.Model):
     id = db.Column(db.Integer, primary_key=True)
