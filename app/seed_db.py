@@ -2,12 +2,16 @@ from app import db
 from app.models import *
 
 def seed_db():
+    db.drop_all()
     db.create_all()
-    for i in range(5):
-        user = User('Foo{}'.format(i), 'Bar{}'.format(i))
-        db.session.add(user)
-    db.session.commit()
+    create_fake_users()
+    create_fake_places()
 
+def create_fake_users():
+    user = User('Mikhail', 'Maslo')
+    user.api_token = 'uwfbT3DYE1sQ3cHQf_ym-B4--qcQJu-PHu7GpuDXbdI'
+    db.session.add(user)
+    db.session.commit()
 
 def create_fake_places():
     yakitoriya = Place('Yakitoriya', 'Новослободская улица, 20',
