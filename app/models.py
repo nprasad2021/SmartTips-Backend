@@ -10,11 +10,21 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(80), unique=False, nullable=False)
     last_name = db.Column(db.String(80), unique=False, nullable=False)
+    image_url = db.Column(db.String, unique=False, nullable=False)
     api_token = db.Column(db.String, unique=True, nullable=False, default=secrets.token_urlsafe)
+    tips = db.relationship('Tip', backref='user', lazy=True)
 
-    def __init__(self, first_name, last_name):
+    def __init__(self, first_name, last_name, image_url):
         self.first_name = first_name
         self.last_name = last_name
+        self.image_url = image_url
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'first_name': self.first_name,
+            'last_name': self.last_name
+        }
 
 class Place(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -65,15 +75,25 @@ class Waiter(db.Model):
 class Tip(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     amount = db.Column(db.Numeric, nullable=False, default=0)
+    rate = db.Column(db.Integer, nullable=False, default=0)
     comment = db.Column(db.String, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     place_id = db.Column(db.Integer, db.ForeignKey('place.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     waiter_id = db.Column(db.Integer, db.ForeignKey('waiter.id'), nullable=True)
+
+    def __init__(self, place_id, user_id, amount, rate, comment=None):
+        self.amount = amount
+        self.rate = rate
+        self.comment = comment
+        self.user_id = user_id
+        self.place_id = place_id
 
     def serialize(self):
         return {
             'id': self.id,
             'amount': self.amount,
             'comment': self.comment,
-            'created_at': self.created_at.isoformat()
+            'created_at': self.created_at.isoformat(),
+            'user': User.query.get(self.user_id).serialize()
         }

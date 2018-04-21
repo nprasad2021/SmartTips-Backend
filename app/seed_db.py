@@ -8,7 +8,8 @@ def seed_db():
     create_fake_places()
 
 def create_fake_users():
-    user = User('Mikhail', 'Maslo')
+    user = User('Mikhail', 'Maslo',
+         'https://avatars1.githubusercontent.com/u/15061918?s=400&v=4')
     user.api_token = 'uwfbT3DYE1sQ3cHQf_ym-B4--qcQJu-PHu7GpuDXbdI'
     db.session.add(user)
     db.session.commit()

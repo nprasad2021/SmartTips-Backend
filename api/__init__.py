@@ -9,4 +9,4 @@ def test_method():
     return jsonify({'message': 'hello world'})
 
 from .places import *
-
+from api.tips import *
