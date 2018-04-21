@@ -20,6 +20,8 @@ class Place(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     address = db.Column(db.String, nullable=True)
+    rating = db.Column(db.Integer, nullable=True, default=0)
+    image_url = db.Column(db.String, nullable=True)
     location_latitude = db.Column(db.Numeric, nullable=False)
     location_longitude = db.Column(db.Numeric, nullable=False)
     is_tipping_available = db.Column(db.Boolean, nullable=False, default=True)
@@ -42,6 +44,8 @@ class Place(db.Model):
             'id': self.id,
             'name': self.name,
             'address': self.address,
+            'rating': self.rating,
+            'image_url': self.image_url,
             'location_latitude': self.location_latitude,
             'location_longitude': self.location_longitude,
             'is_tipping_available': self.is_tipping_available,
