@@ -4,6 +4,7 @@ from flask import current_app
 from . import db
 from datetime import datetime
 import secrets
+from geopy import Point
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -18,12 +19,25 @@ class User(db.Model):
 class Place(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
+    address = db.Column(db.String, nullable=True)
     location_latitude = db.Column(db.Numeric, nullable=False)
     location_longitude = db.Column(db.Numeric, nullable=False)
-    is_tipping_available = db.Column(db.Boolean, nullable=False)
-    is_place_tippting_available = db.Column(db.Boolean, nullable=True)
+    is_tipping_available = db.Column(db.Boolean, nullable=False, default=True)
+    is_place_tippting_available = db.Column(db.Boolean, nullable=False, default=True)
     tips = db.relationship('Tip', backref='place', lazy=True)
     waiters = db.relationship('Waiter', backref='place', lazy=True)
+
+    def __init__(self, name, address, location_latitude, location_longitude, is_tipping_available):
+        self.name = name
+        self.address = address
+        self.location_latitude = location_latitude
+        self.location_longitude = location_longitude
+        self.is_tipping_available = is_tipping_available
+
+    def location():
+        Point(self.location_latitude, self.location_logitude)
+
+
 
 class Waiter(db.Model):
     id = db.Column(db.Integer, primary_key=True)
