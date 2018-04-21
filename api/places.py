@@ -3,6 +3,7 @@ from flask import jsonify, abort, request
 import geopy
 from geopy import distance
 from app.models import Place
+from functools import reduce
 
 from api.authentication import requires_authentication
 
@@ -26,3 +27,14 @@ def places_for_location():
 
 
     return jsonify(places=result), 200
+
+@api.route('/places/<place_id>/rates/', methods=['GET'])
+def get_place_rates(place_id):
+    place = Place.query.get(place_id)
+    if place is None:
+        return jsonify(message='place not found'), 400
+
+    rates = [tip.rate for tip in place.tips]
+    average_rate = reduce(lambda x, y: x + y, rates) / len(rates)
+
+    return jsonify(average_rate=int(average_rate), place=place.serialize()), 200
