@@ -5,6 +5,7 @@ from . import db
 from datetime import datetime
 import secrets
 from geopy import Point
+from functools import reduce
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -67,10 +68,31 @@ class Waiter(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(80), unique=False, nullable=False)
     last_name = db.Column(db.String(80), unique=False, nullable=False)
-    login = db.Column(db.String(30), unique=True, nullable=False)
-    password = db.Column(db.String, unique=True, nullable=False)
+    image_url = db.Column(db.String, unique=False, nullable=False)
     place_id = db.Column(db.Integer, db.ForeignKey('place.id'), nullable=False)
     tips = db.relationship('Tip', backref='waiter', lazy=True)
+
+    def __init__(self, first_name, last_name, image_url, place_id):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.image_url = image_url
+        self.place_id = place_id
+
+    def balance(self):
+        tips_amounts = [tip.amount for tip in Place.query.get(self.place_id).tips]
+        if len(tips_amounts) == 0:
+            return 0
+        return reduce(lambda x, y: x + y, tips_amounts)
+
+
+    def serialize(self):
+        return {
+            'place': Place.query.get(self.place_id).serialize(),
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'image_url': self.last_name,
+            'balance': self.balance()
+        }
 
 class Tip(db.Model):
     id = db.Column(db.Integer, primary_key=True)

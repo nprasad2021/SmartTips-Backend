@@ -10,3 +10,4 @@ def test_method():
 
 from .places import *
 from api.tips import *
+from api.waiter import *

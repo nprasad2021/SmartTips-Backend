@@ -6,6 +6,17 @@ def seed_db():
     db.create_all()
     create_fake_users()
     create_fake_places()
+    create_fake_waiter()
+
+def create_fake_waiter():
+    place = Place.query.all()[0]
+    waiter = Waiter(
+        'Austin',
+        'Powers',
+        'http://screencrush.com/files/2017/04/Austin-Powers-goofy-teeth.jpg',
+        place.id)
+    db.session.add(waiter)
+    db.session.commit()
 
 def create_fake_users():
     user = User('Mikhail', 'Maslo',
