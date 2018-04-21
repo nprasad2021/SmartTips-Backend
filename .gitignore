@@ -17,6 +17,8 @@ _mailinglist
 docs/_build/
 __pycache__/
 
+*.db
+
 # Coverage reports
 htmlcov/
 .coverage
