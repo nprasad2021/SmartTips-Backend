@@ -8,3 +8,5 @@ from .errors import unauthorized
 def test_method():
     return jsonify({'message': 'hello world'})
 
+from .places import *
+

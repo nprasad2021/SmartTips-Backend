@@ -11,6 +11,10 @@ class User(db.Model):
     last_name = db.Column(db.String(80), unique=False, nullable=False)
     api_token = db.Column(db.String, unique=True, nullable=False, default=secrets.token_urlsafe)
 
+    def __init__(self, first_name, last_name):
+        self.first_name = first_name
+        self.last_name = last_name
+
 class Place(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
