@@ -31,25 +31,25 @@ def create_fake_users():
 
 def create_fake_places():
     chaihona = Place('Chaihona #1', 'Новослободская улица, 16',
-            55.781760, 37.599056, 9, True)
+            55.781760, 37.599056, 9, True, 'https://avatars.mds.yandex.net/get-altay/813485/2a0000015e7570d9adbc265291f5663aa37a/XXL')
     shokoladnica = Place('Shokoladnica', 'Новослободская улица, 9 стр 1',
-            55.784606, 37.596588, 6, True)
+            55.784606, 37.596588, 6, True, 'https://avatars.mds.yandex.net/get-altay/474904/2a0000015c2552f3275f7352441a862bbbb2/XXL')
     montana = Place('Lounge Cafe Montana', 'Новослободская улица, 10 корпус 2',
-            55.780554, 37.600465, 7, True)
+            55.780554, 37.600465, 7, True, 'http://кальянные.москва/uploads/72c9342cc4e7e5c69c141b95527fdf0fa28ede00.jpg')
     yakitoriya = Place('Yakitoriya', 'Новослободская улица, 20',
-            55.782174, 37.598753, 7, True)
+            55.782174, 37.598753, 7, True, 'https://avatars.mds.yandex.net/get-altay/239474/2a0000015d21ade5354b82406a9e46f3a926/XXL')
     marukame = Place('Marukame', 'ул. Сущевская, 27, стр. 2',
-            55.782871, 37.601134, 9, True)
+            55.782871, 37.601134, 9, True, 'https://avatars.mds.yandex.net/get-altay/200322/2a0000015b2eb36b0faee2a81b2f3f77175c/XXL')
     doublebi = Place('DoubleB', 'Новослободская улица, 18',
-            55.782234, 37.599331, 8, True)
+            55.782234, 37.599331, 8, True, 'https://avatars.mds.yandex.net/get-altay/372953/2a0000015ea244021fc9bad3b0ac97d17c88/XXL')
     dzhondzholi = Place('DzhonDzholi', 'Новослободская улица, 14/19с1',
-            55.781069, 37.599635, 8, True)
+            55.781069, 37.599635, 8, True, 'https://avatars.mds.yandex.net/get-altay/372953/2a0000015ea8f1dc6a9ecf4a132f3f8d5118/XXL')
     sosnailipa = Place('Sosna i Lipa', 'улица Покровка, 17',
-            55.759471, 37.645537, 10, True)
+            55.759471, 37.645537, 10, True, 'https://avatars.mds.yandex.net/get-altay/1025206/2a000001619f0cb88515db230acd67cf44bb/XXL')
     babetta = Place('Babetta', 'Мясницкая улица, 15',
-            55.763121, 37.635053, 6, True)
+            55.763121, 37.635053, 6, True, 'https://avatars.mds.yandex.net/get-altay/1363376/2a00000162b5496576852dbb3777a46fc5e9/XXL')
     didi = Place('Didi', 'Тверской бульвар, 14, стр. 4',
-            55.759800, 37.601517, 8, True)
+            55.759800, 37.601517, 8, True, 'https://avatars.mds.yandex.net/get-altay/934739/2a0000015f819268f4d1aee84ed983957cdc/XXL')
 
     places = [chaihona, shokoladnica, montana, yakitoriya, marukame,
              doublebi, dzhondzholi, sosnailipa, babetta, didi]

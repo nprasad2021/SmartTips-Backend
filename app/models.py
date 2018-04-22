@@ -42,13 +42,15 @@ class Place(db.Model):
     tips = db.relationship('Tip', backref='place', lazy=True)
     waiters = db.relationship('Waiter', backref='place', lazy=True)
 
-    def __init__(self, name, address, location_latitude, location_longitude, rating, is_tipping_available):
+    def __init__(self, name, address, location_latitude, location_longitude, rating,
+                                is_tipping_available, image_url):
         self.name = name
         self.address = address
         self.location_latitude = location_latitude
         self.location_longitude = location_longitude
         self.is_tipping_available = is_tipping_available
         self.rating = rating
+        self.image_url = image_url
 
     def location(self):
         return Point(self.location_latitude, self.location_longitude)
