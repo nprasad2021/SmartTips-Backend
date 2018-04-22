@@ -26,6 +26,12 @@ def create_fake_users():
     db.session.commit()
 
 def create_fake_places():
+    chaihona = Place('Chaihona #1', 'Новослободская улица, 16',
+            55.781760, 37.599056, True)
+    shokoladnica = Place('Shokoladnica', 'Новослободская улица, 9 стр 1',
+            55.784606, 37.596588, True)
+    montana = Place('Lounge Cafe Montana', 'Новослободская улица, 10 корпус 2',
+            55.780554, 37.600465, True)
     yakitoriya = Place('Yakitoriya', 'Новослободская улица, 20',
             55.782174, 37.598753, True)
     marukame = Place('Marukame', 'ул. Сущевская, 27, стр. 2',
@@ -41,7 +47,9 @@ def create_fake_places():
     didi = Place('Didi', 'Тверской бульвар, 14, стр. 4',
             55.759800, 37.601517, True)
 
-    places = [ yakitoriya, marukame, doublebi, dzhondzholi, sosnailipa, babetta, didi]
+
+    places = [chaihona, shokoladnica, montana, yakitoriya, marukame,
+             doublebi, dzhondzholi, sosnailipa, babetta, didi]
     [db.session.add(p) for p in places]
 
     db.session.commit()
