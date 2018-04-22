@@ -26,18 +26,23 @@ def places_for_location():
     required_distance = 20 # km
     user_location = geopy.Point(latitude, longitude)
     all_places = Place.query.all()
-    result = []
+    close_places = []
     for place in all_places:
         place_location = place.location()
         distance_to_place = distance.distance(place_location, user_location).km
         if distance_to_place < required_distance:
-            result.append(place.serialize())
+            close_places.append(place)
 
     additional_places = create_additional_places_request(user_location)
+    close_places.extend(additional_places)
 
-    result.extend([place.serialize() for place in additional_places])
+    serialized_places = []
+    for place in close_places:
+        place_data = place.serialize()
+        place_data['here_directions_url'] = place.here_directions_url(user_location)
+        serialized_places.append(place_data)
 
-    return jsonify(places=result), 200
+    return jsonify(places=serialized_places), 200
 
 def create_additional_places_request(user_location):
     params = DEFAULT_HERE_API_PARAMS

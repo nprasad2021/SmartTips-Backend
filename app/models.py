@@ -65,6 +65,14 @@ class Place(db.Model):
             'tips': [tip.serialize() for tip in self.tips]
         }
 
+    def here_directions_url(self, user_location):
+        return 'here-route://{},{}/{},{}'.format(
+            user_location.latitude,
+            user_location.longitude,
+            self.location_latitude,
+            self.location_longitude
+        )
+
     @staticmethod
     def create_from_here_place(here_place):
         try:
