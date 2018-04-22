@@ -27,25 +27,25 @@ def create_fake_users():
 
 def create_fake_places():
     chaihona = Place('Chaihona #1', 'Новослободская улица, 16',
-            55.781760, 37.599056, True)
+            55.781760, 37.599056, 9, True)
     shokoladnica = Place('Shokoladnica', 'Новослободская улица, 9 стр 1',
-            55.784606, 37.596588, True)
+            55.784606, 37.596588, 6, True)
     montana = Place('Lounge Cafe Montana', 'Новослободская улица, 10 корпус 2',
-            55.780554, 37.600465, True)
+            55.780554, 37.600465, 7, True)
     yakitoriya = Place('Yakitoriya', 'Новослободская улица, 20',
-            55.782174, 37.598753, True)
+            55.782174, 37.598753, 7, True)
     marukame = Place('Marukame', 'ул. Сущевская, 27, стр. 2',
-            55.782871, 37.601134, True)
+            55.782871, 37.601134, 9, True)
     doublebi = Place('DoubleB', 'Новослободская улица, 18',
-            55.782234, 37.599331, True)
+            55.782234, 37.599331, 8, True)
     dzhondzholi = Place('DzhonDzholi', 'Новослободская улица, 14/19с1',
-            55.781069, 37.599635, True)
+            55.781069, 37.599635, 8, True)
     sosnailipa = Place('Sosna i Lipa', 'улица Покровка, 17',
-            55.759471, 37.645537, True)
+            55.759471, 37.645537, 10, True)
     babetta = Place('Babetta', 'Мясницкая улица, 15',
-            55.763121, 37.635053, True)
+            55.763121, 37.635053, 6, True)
     didi = Place('Didi', 'Тверской бульвар, 14, стр. 4',
-            55.759800, 37.601517, True)
+            55.759800, 37.601517, 8, True)
 
 
     places = [chaihona, shokoladnica, montana, yakitoriya, marukame,

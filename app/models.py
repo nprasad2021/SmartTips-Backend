@@ -41,12 +41,13 @@ class Place(db.Model):
     tips = db.relationship('Tip', backref='place', lazy=True)
     waiters = db.relationship('Waiter', backref='place', lazy=True)
 
-    def __init__(self, name, address, location_latitude, location_longitude, is_tipping_available):
+    def __init__(self, name, address, location_latitude, location_longitude, rating, is_tipping_available):
         self.name = name
         self.address = address
         self.location_latitude = location_latitude
         self.location_longitude = location_longitude
         self.is_tipping_available = is_tipping_available
+        self.rating = rating
 
     def location(self):
         return Point(self.location_latitude, self.location_longitude)
@@ -83,9 +84,8 @@ class Place(db.Model):
             rating = here_place['averageRating']
             image_url = here_place['icon']
 
-            place = Place(name, address, location_latitude, location_longitude, False)
+            place = Place(name, address, location_latitude, location_longitude, rating, False)
 
-            place.rating = rating
             place.image_url = image_url
             place.is_place_tippting_available = False
 
