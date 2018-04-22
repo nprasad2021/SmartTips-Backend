@@ -1,7 +1,8 @@
 from app import db
 from app.models import *
-from generation import RandomUserGeneration
 from random import shuffle, randint
+import json
+import requests
 
 def seed_db():
     db.drop_all()
@@ -59,11 +60,12 @@ def create_fake_places():
 def create_fake_tips():
     users = []
     for i in range(1, 18):
-        data = RandomUserGeneration()
+        URL = 'https://randomuser.me/api/'
+        data = requests.get(URL).json()
         user = User(
-            data.get_first_name(),
-            data.get_last_name(),
-            data.data['picture']['thumbnail']
+            data['results'][0]['name']['first'],
+            data['results'][0]['name']['last'],
+            data['results'][0]['picture']['thumbnail']
         )
         users.append(user)
         db.session.add(user)
