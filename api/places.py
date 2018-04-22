@@ -4,9 +4,17 @@ import geopy
 from geopy import distance
 from app.models import Place
 from functools import reduce
+import requests
+import json
 
 from api.authentication import requires_authentication
 
+HERE_DISCOVER_BASE_URL = 'https://places.cit.api.here.com/places/v1/discover/here'
+DEFAULT_HERE_API_PARAMS = {
+    'app_id': 'JTYUMRBXmhKeUTzabYIc',
+    'app_code': 'kQsQLTXuAqyS7aOfshiF7Q',
+    'cat': 'eat-drink'
+}
 
 @api.route('/places/')
 def places_for_location():
@@ -25,8 +33,33 @@ def places_for_location():
         if distance_to_place < required_distance:
             result.append(place.serialize())
 
+    additional_places = create_additional_places_request(user_location)
+
+    result.extend([place.serialize() for place in additional_places])
 
     return jsonify(places=result), 200
+
+def create_additional_places_request(user_location):
+    params = DEFAULT_HERE_API_PARAMS
+    params['at'] = '{},{}'.format(user_location.latitude,
+                                    user_location.longitude)
+
+    try:
+        here_api_request = requests.get(HERE_DISCOVER_BASE_URL, params=params)
+        response = json.loads(here_api_request.text)
+        return convert_here_places_to_native_places(response['results']['items'])
+    except:
+        return []
+
+def convert_here_places_to_native_places(here_places):
+    places = []
+    for here_place in here_places:
+        place = Place.create_from_here_place(here_place)
+        if place is None:
+            continue
+        places.append(place)
+
+    return places
 
 @api.route('/places/<place_id>/rates/', methods=['GET'])
 def get_place_rates(place_id):

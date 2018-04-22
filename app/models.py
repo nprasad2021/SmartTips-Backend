@@ -29,6 +29,7 @@ class User(db.Model):
 
 class Place(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    here_id = db.Column(db.String, nullable=True)
     name = db.Column(db.String, nullable=False)
     address = db.Column(db.String, nullable=True)
     rating = db.Column(db.Integer, nullable=True, default=0)
@@ -63,6 +64,26 @@ class Place(db.Model):
             'is_place_tippting_available': self.is_place_tippting_available,
             'tips': [tip.serialize() for tip in self.tips]
         }
+
+    @staticmethod
+    def create_from_here_place(here_place):
+        try:
+            location_latitude = here_place['position'][0]
+            location_longitude = here_place['position'][1]
+            name = here_place['title']
+            address = here_place['vicinity'].split('<')[0]
+            rating = here_place['averageRating']
+            image_url = here_place['icon']
+
+            place = Place(name, address, location_latitude, location_longitude, False)
+
+            place.rating = rating
+            place.image_url = image_url
+            place.is_place_tippting_available = False
+
+            return place
+        except:
+            return None
 
 class Waiter(db.Model):
     id = db.Column(db.Integer, primary_key=True)
