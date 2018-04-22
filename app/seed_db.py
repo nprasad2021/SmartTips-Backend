@@ -1,5 +1,7 @@
 from app import db
 from app.models import *
+from generation import RandomUserGeneration
+from random import shuffle, randint
 
 def seed_db():
     db.drop_all()
@@ -7,6 +9,7 @@ def seed_db():
     create_fake_users()
     create_fake_places()
     create_fake_waiter()
+    create_fake_tips()
 
 def create_fake_waiter():
     place = Place.query.all()[0]
@@ -47,9 +50,33 @@ def create_fake_places():
     didi = Place('Didi', 'Тверской бульвар, 14, стр. 4',
             55.759800, 37.601517, 8, True)
 
-
     places = [chaihona, shokoladnica, montana, yakitoriya, marukame,
              doublebi, dzhondzholi, sosnailipa, babetta, didi]
     [db.session.add(p) for p in places]
+
+    db.session.commit()
+
+def create_fake_tips():
+    users = []
+    for i in range(1, 18):
+        data = RandomUserGeneration()
+        user = User(
+            data.get_first_name(),
+            data.get_last_name(),
+            data.data['picture']['thumbnail']
+        )
+        users.append(user)
+        db.session.add(user)
+
+    places = Place.query.all()
+
+    for user in users:
+        for i in range(1, 5):
+            shuffle(places)
+            place_id = places[0].id
+            random_amount = randint(100, 1000)
+            random_rate = randint(4, 20)
+            tip = Tip(place_id, user.id, random_amount, random_rate)
+            db.session.add(tip)
 
     db.session.commit()
